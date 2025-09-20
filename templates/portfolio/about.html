@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load portfolio_extras %}
 
 {% block title %}About - Doni Alston G{% endblock %}
 
@@ -162,12 +163,12 @@
                                 {% endif %}
                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-white">{{ skill.name }}</h4>
                             </div>
-                            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ skill.proficiency }}%</span>
+                            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ skill.proficiency }}/10</span>
                         </div>
                         
                         <!-- Progress Bar -->
                         <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
-                            <div class="skill-bar rounded-full h-2" style="width: {{ skill.proficiency }}%"></div>
+                            <div class="skill-bar rounded-full h-2" style="width: {{ skill.proficiency|to_percentage:10 }}%"></div>
                         </div>
                     </div>
                     {% endfor %}

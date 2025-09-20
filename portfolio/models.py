@@ -5,9 +5,11 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Skill(models.Model):
     name = models.CharField(max_length=100)
-    proficiency = models.IntegerField(
-        validators=[MinValueValidator(0), MaxValueValidator(100)],
-        help_text="Proficiency level from 0 to 100"
+    proficiency = models.DecimalField(
+        max_digits=3, 
+        decimal_places=1,
+        validators=[MinValueValidator(0), MaxValueValidator(10)],
+        help_text="Proficiency level from 0.0 to 10.0"
     )
     category = models.CharField(
         max_length=50,
