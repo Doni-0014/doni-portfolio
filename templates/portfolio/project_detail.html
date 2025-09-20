@@ -1,0 +1,252 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ project.title }} - Doni Alston G{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="pt-20 pb-16 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center" data-aos="fade-up">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                {{ project.title }}
+            </h1>
+            <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+                {{ project.description }}
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Project Details -->
+<section class="py-20 bg-white dark:bg-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <!-- Main Content -->
+            <div class="lg:col-span-2">
+                <!-- Project Image -->
+                {% if project.image %}
+                <div class="mb-8" data-aos="fade-up">
+                    <div class="rounded-2xl overflow-hidden shadow-2xl">
+                        <img src="{{ project.image.url }}" alt="{{ project.title }}" class="w-full h-auto">
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Project Description -->
+                <div class="prose prose-lg dark:prose-invert max-w-none mb-8" data-aos="fade-up" data-aos-delay="100">
+                    <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">About This Project</h2>
+                    {% if project.long_description %}
+                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">{{ project.long_description|linebreaks }}</p>
+                    {% else %}
+                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">{{ project.description }}</p>
+                    {% endif %}
+                </div>
+                
+                <!-- Project Links -->
+                <div class="flex flex-col sm:flex-row gap-4" data-aos="fade-up" data-aos-delay="200">
+                    {% if project.github_url %}
+                    <a href="{{ project.github_url }}" target="_blank" class="inline-flex items-center justify-center px-8 py-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-semibold rounded-full hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors">
+                        <i class="fab fa-github mr-3 text-xl"></i>
+                        View Source Code
+                    </a>
+                    {% endif %}
+                    {% if project.live_url %}
+                    <a href="{{ project.live_url }}" target="_blank" class="inline-flex items-center justify-center px-8 py-4 bg-primary text-white font-semibold rounded-full hover:bg-primary/90 transition-colors">
+                        <i class="fas fa-external-link-alt mr-3"></i>
+                        Live Demo
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <div class="sticky top-24 space-y-8">
+                    <!-- Project Info -->
+                    <div class="bg-gray-50 dark:bg-slate-800 rounded-2xl p-6" data-aos="fade-up" data-aos-delay="100">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Project Details</h3>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Created</p>
+                                <p class="font-medium text-gray-900 dark:text-white">{{ project.created_at|date:"F Y" }}</p>
+                            </div>
+                            
+                            {% if project.updated_at != project.created_at %}
+                            <div>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Last Updated</p>
+                                <p class="font-medium text-gray-900 dark:text-white">{{ project.updated_at|date:"F Y" }}</p>
+                            </div>
+                            {% endif %}
+                            
+                            {% if project.featured %}
+                            <div>
+                                <span class="inline-flex items-center px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 text-sm font-medium rounded-full">
+                                    <i class="fas fa-star mr-2"></i>
+                                    Featured Project
+                                </span>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <!-- Tech Stack -->
+                    {% if project.tech_stack.all %}
+                    <div class="bg-gray-50 dark:bg-slate-800 rounded-2xl p-6" data-aos="fade-up" data-aos-delay="200">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Technologies Used</h3>
+                        <div class="flex flex-wrap gap-2">
+                            {% for skill in project.tech_stack.all %}
+                            <span class="px-3 py-2 bg-white dark:bg-slate-700 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg border border-gray-200 dark:border-gray-600">
+                                {{ skill.name }}
+                            </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Share Project -->
+                    <div class="bg-gray-50 dark:bg-slate-800 rounded-2xl p-6" data-aos="fade-up" data-aos-delay="300">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Share This Project</h3>
+                        <div class="flex space-x-3">
+                            <button onclick="shareProject('twitter')" class="p-3 bg-blue-400 text-white rounded-lg hover:bg-blue-500 transition-colors">
+                                <i class="fab fa-twitter"></i>
+                            </button>
+                            <button onclick="shareProject('linkedin')" class="p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                <i class="fab fa-linkedin"></i>
+                            </button>
+                            <button onclick="shareProject('facebook')" class="p-3 bg-blue-800 text-white rounded-lg hover:bg-blue-900 transition-colors">
+                                <i class="fab fa-facebook"></i>
+                            </button>
+                            <button onclick="copyProjectLink()" class="p-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                                <i class="fas fa-link"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Projects -->
+{% if related_projects %}
+<section class="py-20 bg-gray-50 dark:bg-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16" data-aos="fade-up">
+            <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">Related Projects</h2>
+            <p class="text-xl text-gray-600 dark:text-gray-400">Other projects you might be interested in</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for related_project in related_projects %}
+            <div class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover-lift overflow-hidden" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:100 }}">
+                {% if related_project.image %}
+                <div class="h-48 bg-gradient-to-br from-blue-500 to-purple-600 relative overflow-hidden">
+                    <img src="{{ related_project.image.url }}" alt="{{ related_project.title }}" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/20"></div>
+                </div>
+                {% else %}
+                <div class="h-48 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                    <i class="fas fa-code text-6xl text-white/50"></i>
+                </div>
+                {% endif %}
+                
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{{ related_project.title }}</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">{{ related_project.description }}</p>
+                    
+                    <!-- Tech Stack -->
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        {% for skill in related_project.tech_stack.all|slice:":3" %}
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-sm rounded-full">
+                            {{ skill.name }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                    
+                    <a href="{% url 'project_detail' related_project.pk %}" class="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors">
+                        View Project
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section class="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div data-aos="fade-up">
+            <h2 class="text-4xl font-bold text-white mb-6">Like What You See?</h2>
+            <p class="text-xl text-blue-100 mb-8">Let's discuss how we can work together on your next project.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="{% url 'contact' %}" class="inline-flex items-center justify-center px-8 py-4 bg-white text-blue-600 font-semibold rounded-full hover:bg-gray-100 transition-colors">
+                    Get In Touch
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+                <a href="{% url 'projects' %}" class="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-blue-600 transition-colors">
+                    View All Projects
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function shareProject(platform) {
+        const url = window.location.href;
+        const title = '{{ project.title }}';
+        const description = '{{ project.description|truncatewords:20 }}';
+        
+        let shareUrl = '';
+        
+        switch(platform) {
+            case 'twitter':
+                shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`;
+                break;
+            case 'linkedin':
+                shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+                break;
+            case 'facebook':
+                shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+                break;
+        }
+        
+        if (shareUrl) {
+            window.open(shareUrl, '_blank', 'width=600,height=400');
+        }
+    }
+    
+    function copyProjectLink() {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url).then(() => {
+            // Show success message
+            const button = event.target.closest('button');
+            const originalHTML = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-check"></i>';
+            button.classList.add('bg-green-600');
+            
+            setTimeout(() => {
+                button.innerHTML = originalHTML;
+                button.classList.remove('bg-green-600');
+            }, 2000);
+        });
+    }
+</script>
+{% endblock %}

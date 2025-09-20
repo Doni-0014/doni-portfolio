@@ -1,0 +1,235 @@
+{% extends 'base.html' %}
+
+{% block title %}Projects - Doni Alston G{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="pt-20 pb-16 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center" data-aos="fade-up">
+            <h1 class="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+                My <span class="text-gradient">Projects</span>
+            </h1>
+            <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+                A showcase of my recent work and side projects
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Filter Section -->
+<section class="py-8 bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-gray-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap justify-center gap-4" data-aos="fade-up">
+            {% for skill in tech_skills %}
+            <span class="tech-badge px-6 py-3 rounded-full border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 dark:hover:border-blue-500 cursor-default">
+                {{ skill.name }}
+            </span>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Projects Grid -->
+<section class="py-20 bg-gray-50 dark:bg-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Loading State -->
+        <div id="loading-state" class="hidden text-center py-12">
+            <div class="loading-spinner mx-auto mb-4"></div>
+            <p class="text-gray-600 dark:text-gray-400">Loading projects...</p>
+        </div>
+        
+        <!-- Projects Grid -->
+        <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for project in projects %}
+            <div class="project-card bg-white dark:bg-slate-700 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover-lift overflow-hidden" 
+                 data-tech="{% for skill in project.tech_stack.all %}{{ skill.name|lower }} {% endfor %}"
+                 data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:100 }}">
+                
+                <!-- Project Image -->
+                {% if project.image %}
+                <div class="h-48 bg-gradient-to-br from-blue-500 to-purple-600 relative overflow-hidden">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+                    <div class="absolute inset-0 bg-black/20"></div>
+                    {% if project.featured %}
+                    <div class="absolute top-4 right-4">
+                        <span class="px-3 py-1 bg-yellow-500 text-white text-sm font-medium rounded-full">
+                            Featured
+                        </span>
+                    </div>
+                    {% endif %}
+                </div>
+                {% else %}
+                <div class="h-48 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center relative">
+                    <i class="fas fa-code text-6xl text-white/50"></i>
+                    {% if project.featured %}
+                    <div class="absolute top-4 right-4">
+                        <span class="px-3 py-1 bg-yellow-500 text-white text-sm font-medium rounded-full">
+                            Featured
+                        </span>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+                
+                <!-- Project Content -->
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{{ project.title }}</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">{{ project.description }}</p>
+                    
+                    <!-- Tech Stack -->
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        {% for skill in project.tech_stack.all %}
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-sm rounded-full">
+                            {{ skill.name }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                    
+                    <!-- Project Links -->
+                    <div class="flex space-x-4">
+                        {% if project.github_url %}
+                        <a href="{{ project.github_url }}" target="_blank" class="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+                            <i class="fab fa-github mr-2"></i>
+                            Code
+                        </a>
+                        {% endif %}
+                        {% if project.live_url %}
+                        <a href="{{ project.live_url }}" target="_blank" class="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+                            <i class="fas fa-external-link-alt mr-2"></i>
+                            Live Demo
+                        </a>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- View Details Button -->
+                    <div class="mt-4">
+                        <a href="{% url 'project_detail' project.pk %}" class="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors">
+                            View Details
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-full text-center py-12">
+                <i class="fas fa-folder-open text-6xl text-gray-400 mb-4"></i>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">No Projects Found</h3>
+                <p class="text-gray-600 dark:text-gray-400">No projects match the current filter.</p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Pagination -->
+        {% if is_paginated %}
+        <div class="mt-12 flex justify-center">
+            <nav class="flex items-center space-x-2">
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}{% if selected_tech %}&tech={{ selected_tech }}{% endif %}" 
+                   class="px-4 py-2 bg-white dark:bg-slate-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-600 transition-colors">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                {% endif %}
+                
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <span class="px-4 py-2 bg-primary text-white rounded-lg">{{ num }}</span>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a href="?page={{ num }}{% if selected_tech %}&tech={{ selected_tech }}{% endif %}" 
+                       class="px-4 py-2 bg-white dark:bg-slate-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-600 transition-colors">
+                        {{ num }}
+                    </a>
+                    {% endif %}
+                {% endfor %}
+                
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}{% if selected_tech %}&tech={{ selected_tech }}{% endif %}" 
+                   class="px-4 py-2 bg-white dark:bg-slate-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-600 transition-colors">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                {% endif %}
+            </nav>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div data-aos="fade-up">
+            <h2 class="text-4xl font-bold text-white mb-6">Have a Project in Mind?</h2>
+            <p class="text-xl text-blue-100 mb-8">Let's discuss how we can work together to bring your ideas to life.</p>
+            <a href="{% url 'contact' %}" class="inline-flex items-center px-8 py-4 bg-white text-blue-600 font-semibold rounded-full hover:bg-gray-100 transition-colors hover-lift shadow-lg">
+                Start a Project
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    
+    /* Technology Badge Hover Effects */
+    .tech-badge {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .tech-badge::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+        transition: left 0.5s ease;
+    }
+    
+    .tech-badge:hover::before {
+        left: 100%;
+    }
+    
+    .tech-badge:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(59, 130, 246, 0.15);
+    }
+    
+    .dark .tech-badge:hover {
+        box-shadow: 0 10px 25px rgba(59, 130, 246, 0.25);
+    }
+    
+    /* Individual badge colors on hover */
+    .tech-badge:nth-child(1):hover { border-color: #ef4444; color: #ef4444; }
+    .tech-badge:nth-child(2):hover { border-color: #10b981; color: #10b981; }
+    .tech-badge:nth-child(3):hover { border-color: #f59e0b; color: #f59e0b; }
+    .tech-badge:nth-child(4):hover { border-color: #8b5cf6; color: #8b5cf6; }
+    .tech-badge:nth-child(5):hover { border-color: #06b6d4; color: #06b6d4; }
+    .tech-badge:nth-child(6):hover { border-color: #ec4899; color: #ec4899; }
+    .tech-badge:nth-child(7):hover { border-color: #84cc16; color: #84cc16; }
+    .tech-badge:nth-child(8):hover { border-color: #f97316; color: #f97316; }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // All filter functionality has been removed - buttons are now static visual elements
+        // Projects are displayed without filtering
+        
+        // Initialize AOS for animations
+        if (typeof AOS !== 'undefined') {
+            AOS.init();
+        }
+    });
+</script>
+{% endblock %}

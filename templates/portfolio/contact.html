@@ -1,0 +1,318 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact - Doni Alston G{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="pt-20 pb-16 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center" data-aos="fade-up">
+            <h1 class="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+                Get In <span class="text-gradient">Touch</span>
+            </h1>
+            <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+                Ready to start your next project? Let's discuss how we can work together.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="py-20 bg-white dark:bg-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Contact Form -->
+            <div data-aos="fade-right">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">Send Me a Message</h2>
+                
+                <form method="post" class="space-y-6" id="contact-form">
+                    {% csrf_token %}
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                Name *
+                            </label>
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                                <div class="mt-1 text-sm text-red-600">
+                                    {{ form.name.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div>
+                            <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                Email *
+                            </label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="mt-1 text-sm text-red-600">
+                                    {{ form.email.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.subject.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Subject *
+                        </label>
+                        {{ form.subject }}
+                        {% if form.subject.errors %}
+                            <div class="mt-1 text-sm text-red-600">
+                                {{ form.subject.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.message.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Message *
+                        </label>
+                        {{ form.message }}
+                        {% if form.message.errors %}
+                            <div class="mt-1 text-sm text-red-600">
+                                {{ form.message.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <button type="submit" class="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-full hover:from-blue-700 hover:to-purple-700 transition-all duration-300 hover-lift shadow-lg">
+                        <span class="submit-text">Send Message</span>
+                        <span class="submit-loading hidden">
+                            <i class="fas fa-spinner fa-spin mr-2"></i>
+                            Sending...
+                        </span>
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Contact Information -->
+            <div data-aos="fade-left">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">Contact Information</h2>
+                
+                <div class="space-y-8">
+                    <!-- Contact Cards -->
+                    <div class="space-y-6">
+                        {% if personal_info.email %}
+                        <div class="contact-card flex items-start p-6 bg-gray-50 dark:bg-slate-800 rounded-2xl hover-lift transition-all duration-300 cursor-pointer">
+                            <div class="contact-icon flex-shrink-0 w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mr-4 transition-all duration-300">
+                                <i class="fas fa-envelope text-blue-600 dark:text-blue-400 transition-all duration-300"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1 transition-colors duration-300">Email</h3>
+                                <p class="text-gray-600 dark:text-gray-400 mb-2 transition-colors duration-300">{{ personal_info.email }}</p>
+                                <a href="mailto:{{ personal_info.email }}" class="text-primary hover:text-primary/80 transition-colors">
+                                    Send an email
+                                </a>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if personal_info.phone %}
+                        <div class="contact-card flex items-start p-6 bg-gray-50 dark:bg-slate-800 rounded-2xl hover-lift transition-all duration-300 cursor-pointer">
+                            <div class="contact-icon flex-shrink-0 w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mr-4 transition-all duration-300">
+                                <i class="fas fa-phone text-green-600 dark:text-green-400 transition-all duration-300"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1 transition-colors duration-300">Phone</h3>
+                                <p class="text-gray-600 dark:text-gray-400 mb-2 transition-colors duration-300">{{ personal_info.phone }}</p>
+                                <a href="tel:{{ personal_info.phone }}" class="text-primary hover:text-primary/80 transition-colors">
+                                    Call now
+                                </a>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if personal_info.location %}
+                        <div class="contact-card flex items-start p-6 bg-gray-50 dark:bg-slate-800 rounded-2xl hover-lift transition-all duration-300 cursor-pointer">
+                            <div class="contact-icon flex-shrink-0 w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mr-4 transition-all duration-300">
+                                <i class="fas fa-map-marker-alt text-purple-600 dark:text-purple-400 transition-all duration-300"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1 transition-colors duration-300">Location</h3>
+                                <p class="text-gray-600 dark:text-gray-400 transition-colors duration-300">{{ personal_info.location }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Social Links -->
+                    <div class="pt-8 border-t border-gray-200 dark:border-gray-700">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-6">Follow Me</h3>
+                        <div class="flex space-x-4">
+                            {% if personal_info.github_url %}
+                            <a href="{{ personal_info.github_url }}" target="_blank" class="p-4 bg-gray-100 dark:bg-slate-800 rounded-full hover:bg-gray-900 dark:hover:bg-slate-700 hover:text-white transition-all duration-300 hover-lift">
+                                <i class="fab fa-github text-2xl"></i>
+                            </a>
+                            {% endif %}
+                            {% if personal_info.linkedin_url %}
+                            <a href="{{ personal_info.linkedin_url }}" target="_blank" class="p-4 bg-gray-100 dark:bg-slate-800 rounded-full hover:bg-blue-600 hover:text-white transition-all duration-300 hover-lift">
+                                <i class="fab fa-linkedin text-2xl"></i>
+                            </a>
+                            {% endif %}
+                            {% if personal_info.twitter_url %}
+                            <a href="{{ personal_info.twitter_url }}" target="_blank" class="p-4 bg-gray-100 dark:bg-slate-800 rounded-full hover:bg-blue-400 hover:text-white transition-all duration-300 hover-lift">
+                                <i class="fab fa-twitter text-2xl"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# FAQ section removed as requested #}
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    
+    /* Contact Card Hover Effects */
+    .contact-card {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .contact-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: left 0.6s ease;
+    }
+    
+    .contact-card:hover::before {
+        left: 100%;
+    }
+    
+    .contact-card:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 
+            0 20px 40px rgba(0, 0, 0, 0.1),
+            0 0 0 1px rgba(59, 130, 246, 0.2);
+        background: linear-gradient(135deg, 
+            rgba(59, 130, 246, 0.05) 0%,
+            rgba(139, 92, 246, 0.05) 100%);
+    }
+    
+    .dark .contact-card:hover {
+        background: linear-gradient(135deg, 
+            rgba(59, 130, 246, 0.1) 0%,
+            rgba(139, 92, 246, 0.1) 100%);
+        box-shadow: 
+            0 20px 40px rgba(0, 0, 0, 0.3),
+            0 0 0 1px rgba(59, 130, 246, 0.3);
+    }
+    
+    .contact-icon {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .contact-card:hover .contact-icon {
+        transform: scale(1.1) rotate(5deg);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .contact-card:hover .contact-icon i {
+        transform: scale(1.2);
+        filter: brightness(1.2);
+    }
+    
+    /* Individual card color effects */
+    .contact-card:nth-child(1):hover .contact-icon {
+        background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+    }
+    
+    .contact-card:nth-child(2):hover .contact-icon {
+        background: linear-gradient(135deg, #10b981, #059669);
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+    }
+    
+    .contact-card:nth-child(3):hover .contact-icon {
+        background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+    }
+    
+    .contact-card:hover .contact-icon i {
+        color: white !important;
+    }
+    
+    .contact-card:hover h3 {
+        color: #3b82f6;
+        text-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+    }
+    
+    .dark .contact-card:hover h3 {
+        color: #60a5fa;
+        text-shadow: 0 0 10px rgba(96, 165, 250, 0.3);
+    }
+    
+    .contact-card:hover p {
+        color: #4b5563;
+        transform: translateX(4px);
+    }
+    
+    .dark .contact-card:hover p {
+        color: #d1d5db;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('contact-form');
+        const submitButton = form.querySelector('button[type="submit"]');
+        const submitText = submitButton.querySelector('.submit-text');
+        const submitLoading = submitButton.querySelector('.submit-loading');
+        
+        form.addEventListener('submit', function(e) {
+            // Show loading state
+            submitText.classList.add('hidden');
+            submitLoading.classList.remove('hidden');
+            submitButton.disabled = true;
+            
+            // Re-enable button after 5 seconds (in case of network issues)
+            setTimeout(() => {
+                submitText.classList.remove('hidden');
+                submitLoading.classList.add('hidden');
+                submitButton.disabled = false;
+            }, 5000);
+        });
+        
+        // Form validation
+        const inputs = form.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.hasAttribute('required') && !this.value.trim()) {
+                    this.classList.add('border-red-500');
+                } else {
+                    this.classList.remove('border-red-500');
+                }
+            });
+            
+            input.addEventListener('input', function() {
+                if (this.classList.contains('border-red-500') && this.value.trim()) {
+                    this.classList.remove('border-red-500');
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

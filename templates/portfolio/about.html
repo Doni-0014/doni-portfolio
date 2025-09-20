@@ -1,0 +1,425 @@
+{% extends 'base.html' %}
+
+{% block title %}About - Doni Alston G{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="pt-20 pb-16 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center" data-aos="fade-up">
+            <h1 class="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+                About <span class="text-gradient">Me</span>
+            </h1>
+            <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+                Get to know the person behind the code
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Profile Section -->
+<section class="py-20 bg-white dark:bg-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <!-- Profile Image -->
+            <div class="order-2 lg:order-1" data-aos="fade-right">
+                <div class="relative">
+                    <div class="w-full max-w-md mx-auto rounded-2xl overflow-hidden shadow-2xl">
+                        {% if personal_info.profile_image %}
+                            <img src="{{ personal_info.profile_image.url }}" alt="Doni Alston G" class="w-full h-auto">
+                        {% else %}
+                            <div class="w-full h-96 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                                <span class="text-8xl font-bold text-white">{{ personal_info.name|first|default:"D" }}</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <!-- Floating Elements -->
+                    <div class="absolute -top-4 -right-4 w-24 h-24 bg-blue-500/20 rounded-full blur-xl"></div>
+                    <div class="absolute -bottom-4 -left-4 w-32 h-32 bg-purple-500/20 rounded-full blur-xl"></div>
+                </div>
+            </div>
+            
+            <!-- Profile Content -->
+            <div class="order-1 lg:order-2" data-aos="fade-left">
+                <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-6">
+                    {{ personal_info.name|default:"Doni Alston G" }}
+                </h2>
+                <h3 class="text-2xl text-primary mb-6">
+                    {{ personal_info.title|default:"Python Full Stack Developer" }}
+                </h3>
+                
+                <div class="prose prose-lg dark:prose-invert max-w-none">
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">
+                        {{ personal_info.bio|default:"I'm a passionate Python Full Stack Developer with a love for creating innovative web solutions. With expertise in Django, React, and modern web technologies, I enjoy building scalable applications that make a real difference." }}
+                    </p>
+                    
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">
+                        When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing my knowledge through blog posts and tutorials.
+                    </p>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                    {% if personal_info.email %}
+                    <div class="contact-card flex items-center p-4 bg-gray-50 dark:bg-slate-800 rounded-lg cursor-pointer">
+                        <div class="contact-icon flex-shrink-0 w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mr-3 transition-all duration-300">
+                            <i class="fas fa-envelope text-blue-600 dark:text-blue-400 transition-all duration-300"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 transition-colors duration-300">Email</p>
+                            <p class="font-medium transition-colors duration-300">{{ personal_info.email }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if personal_info.phone %}
+                    <div class="contact-card flex items-center p-4 bg-gray-50 dark:bg-slate-800 rounded-lg cursor-pointer">
+                        <div class="contact-icon flex-shrink-0 w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mr-3 transition-all duration-300">
+                            <i class="fas fa-phone text-green-600 dark:text-green-400 transition-all duration-300"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 transition-colors duration-300">Phone</p>
+                            <p class="font-medium transition-colors duration-300">{{ personal_info.phone }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if personal_info.location %}
+                    <div class="contact-card flex items-center p-4 bg-gray-50 dark:bg-slate-800 rounded-lg cursor-pointer">
+                        <div class="contact-icon flex-shrink-0 w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mr-3 transition-all duration-300">
+                            <i class="fas fa-map-marker-alt text-purple-600 dark:text-purple-400 transition-all duration-300"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 transition-colors duration-300">Location</p>
+                            <p class="font-medium transition-colors duration-300">{{ personal_info.location }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if personal_info.resume %}
+                    <div class="contact-card flex items-center p-4 bg-gray-50 dark:bg-slate-800 rounded-lg cursor-pointer">
+                        <div class="contact-icon flex-shrink-0 w-10 h-10 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center mr-3 transition-all duration-300">
+                            <i class="fas fa-download text-orange-600 dark:text-orange-400 transition-all duration-300"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 transition-colors duration-300">Resume</p>
+                            <a href="{{ personal_info.resume.url }}" download class="font-medium text-primary hover:text-primary/80 transition-colors">
+                                Download CV
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Social Links -->
+                <div class="flex space-x-4">
+                    {% if personal_info.github_url %}
+                    <a href="{{ personal_info.github_url }}" target="_blank" class="p-3 bg-gray-100 dark:bg-slate-800 rounded-full hover:bg-primary hover:text-white transition-all duration-300">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    {% endif %}
+                    {% if personal_info.linkedin_url %}
+                    <a href="{{ personal_info.linkedin_url }}" target="_blank" class="p-3 bg-gray-100 dark:bg-slate-800 rounded-full hover:bg-blue-600 hover:text-white transition-all duration-300">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                    {% endif %}
+                    {% if personal_info.twitter_url %}
+                    <a href="{{ personal_info.twitter_url }}" target="_blank" class="p-3 bg-gray-100 dark:bg-slate-800 rounded-full hover:bg-blue-400 hover:text-white transition-all duration-300">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+{% if skills %}
+<section class="py-20 bg-gray-50 dark:bg-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16" data-aos="fade-up">
+            <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">Skills & Technologies</h2>
+            <p class="text-xl text-gray-600 dark:text-gray-400">Technologies I work with</p>
+        </div>
+        
+        <!-- Skills by Category -->
+        {% regroup skills by category as skill_categories %}
+        <div class="space-y-12">
+            {% for category in skill_categories %}
+            <div data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:100 }}">
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-8 capitalize">
+                    {{ category.grouper|title }}
+                </h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for skill in category.list %}
+                    <div class="bg-white dark:bg-slate-700 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover-lift">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center">
+                                {% if skill.icon %}
+                                <i class="{{ skill.icon }} text-2xl text-primary mr-3"></i>
+                                {% endif %}
+                                <h4 class="text-lg font-semibold text-gray-900 dark:text-white">{{ skill.name }}</h4>
+                            </div>
+                            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ skill.proficiency }}%</span>
+                        </div>
+                        
+                        <!-- Progress Bar -->
+                        <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+                            <div class="skill-bar rounded-full h-2" style="width: {{ skill.proficiency }}%"></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Education Timeline -->
+{% if education %}
+<section class="py-20 bg-white dark:bg-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16" data-aos="fade-up">
+            <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">Education</h2>
+            <p class="text-xl text-gray-600 dark:text-gray-400">My academic journey</p>
+        </div>
+        
+        <div class="relative">
+            <!-- Timeline Line -->
+            <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-500 to-purple-600 rounded-full"></div>
+            
+            <div class="space-y-12">
+                {% for edu in education %}
+                <div class="relative flex items-center {% if forloop.counter|divisibleby:2 %}flex-row-reverse{% endif %}" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:100 }}">
+                    <!-- Timeline Dot -->
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-primary rounded-full border-4 border-white dark:border-slate-900 z-10"></div>
+                    
+                    <!-- Content -->
+                    <div class="w-1/2 {% if forloop.counter|divisibleby:2 %}pr-8 text-right{% else %}pl-8{% endif %}">
+                        <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover-lift">
+                            <div class="flex items-center {% if forloop.counter|divisibleby:2 %}justify-end{% endif %} mb-2">
+                                {% if edu.is_current %}
+                                <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 text-sm rounded-full mr-3">
+                                    Current
+                                </span>
+                                {% endif %}
+                                <span class="text-sm font-medium text-primary">
+                                    {{ edu.start_date|date:"Y" }} - {% if edu.end_date %}{{ edu.end_date|date:"Y" }}{% else %}Present{% endif %}
+                                </span>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{{ edu.degree }}</h3>
+                            <h4 class="text-lg font-semibold text-primary mb-2">{{ edu.institution }}</h4>
+                            
+                            {% if edu.field_of_study %}
+                            <p class="text-gray-600 dark:text-gray-400 mb-3">{{ edu.field_of_study }}</p>
+                            {% endif %}
+                            
+                            {% if edu.gpa %}
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">GPA: {{ edu.gpa }}</p>
+                            {% endif %}
+                            
+                            {% if edu.description %}
+                            <p class="text-gray-600 dark:text-gray-400">{{ edu.description }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Certifications Section -->
+{% if certifications %}
+<section class="py-20 bg-gray-50 dark:bg-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16" data-aos="fade-up">
+            <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">Certifications</h2>
+            <p class="text-xl text-gray-600 dark:text-gray-400">Professional certifications and achievements</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for cert in certifications %}
+            <div class="bg-white dark:bg-slate-700 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover-lift" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:100 }}">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-certificate text-white text-xl"></i>
+                    </div>
+                    {% if cert.expiry_date %}
+                    <span class="text-xs text-gray-500 dark:text-gray-400">
+                        Expires: {{ cert.expiry_date|date:"M Y" }}
+                    </span>
+                    {% endif %}
+                </div>
+                
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">{{ cert.title }}</h3>
+                <p class="text-primary font-semibold mb-3">{{ cert.issuer }}</p>
+                
+                {% if cert.credential_id %}
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">ID: {{ cert.credential_id }}</p>
+                {% endif %}
+                
+                {% if cert.description %}
+                <p class="text-gray-600 dark:text-gray-400 mb-4">{{ cert.description }}</p>
+                {% endif %}
+                
+                {% if cert.credential_url %}
+                <a href="{{ cert.credential_url }}" target="_blank" class="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors">
+                    View Credential
+                    <i class="fas fa-external-link-alt ml-2 text-sm"></i>
+                </a>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+
+<!-- CTA Section -->
+<section class="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div data-aos="fade-up">
+            <h2 class="text-4xl font-bold text-white mb-6">Let's Work Together</h2>
+            <p class="text-xl text-blue-100 mb-8">Ready to bring your ideas to life? Let's discuss your next project.</p>
+            <a href="{% url 'contact' %}" class="inline-flex items-center px-8 py-4 bg-white text-blue-600 font-semibold rounded-full hover:bg-gray-100 transition-colors hover-lift shadow-lg">
+                Get In Touch
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Contact Card Hover Effects */
+    .contact-card {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .contact-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: left 0.6s ease;
+    }
+    
+    .contact-card:hover::before {
+        left: 100%;
+    }
+    
+    .contact-card:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 
+            0 20px 40px rgba(0, 0, 0, 0.1),
+            0 0 0 1px rgba(59, 130, 246, 0.2);
+        background: linear-gradient(135deg, 
+            rgba(59, 130, 246, 0.05) 0%,
+            rgba(139, 92, 246, 0.05) 100%);
+    }
+    
+    .dark .contact-card:hover {
+        background: linear-gradient(135deg, 
+            rgba(59, 130, 246, 0.1) 0%,
+            rgba(139, 92, 246, 0.1) 100%);
+        box-shadow: 
+            0 20px 40px rgba(0, 0, 0, 0.3),
+            0 0 0 1px rgba(59, 130, 246, 0.3);
+    }
+    
+    .contact-icon {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .contact-card:hover .contact-icon {
+        transform: scale(1.1) rotate(5deg);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .contact-card:hover .contact-icon i {
+        transform: scale(1.2);
+        filter: brightness(1.2);
+    }
+    
+    /* Individual card color effects */
+    .contact-card:nth-child(1):hover .contact-icon {
+        background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+    }
+    
+    .contact-card:nth-child(2):hover .contact-icon {
+        background: linear-gradient(135deg, #10b981, #059669);
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+    }
+    
+    .contact-card:nth-child(3):hover .contact-icon {
+        background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+    }
+    
+    .contact-card:nth-child(4):hover .contact-icon {
+        background: linear-gradient(135deg, #f97316, #ea580c);
+        box-shadow: 0 8px 25px rgba(249, 115, 22, 0.3);
+    }
+    
+    .contact-card:hover .contact-icon i {
+        color: white !important;
+    }
+    
+    .contact-card:hover p {
+        color: #4b5563;
+        transform: translateX(4px);
+    }
+    
+    .dark .contact-card:hover p {
+        color: #d1d5db;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Animate skill bars on scroll
+    const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const skillBars = entry.target.querySelectorAll('.skill-bar');
+                skillBars.forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 200);
+                });
+            }
+        });
+    }, observerOptions);
+
+    // Observe all skill sections
+    document.querySelectorAll('[data-aos="fade-up"]').forEach(section => {
+        if (section.querySelector('.skill-bar')) {
+            observer.observe(section);
+        }
+    });
+</script>
+{% endblock %}
